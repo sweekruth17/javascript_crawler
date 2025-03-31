@@ -4,7 +4,7 @@ const fs = require("fs").promises;
 const zlib = require("zlib");
 const xmlParser = require("fast-xml-parser");
 const { URL } = require("url");
-
+//when we run this file code runs in single thread.
 class ProductCrawler {
   constructor() {
     // Domains to crawl

@@ -13,11 +13,11 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const { URL } = require("url");
 
-// Number of workers (adjust based on your system)
+// Number of workers (adjust based on system cpu)
 const NUM_WORKERS = Math.max(1, os.cpus().length - 1);
 
 if (isMainThread) {
-  // Main thread code
+  // when Main thread runs
   class CrawlerCoordinator {
     constructor() {
       this.workers = [];
@@ -219,7 +219,7 @@ if (isMainThread) {
       };
     }
 
-    // Add this method to manage request concurrency
+    // method to manage request concurrency
     async scheduleRequest(fn) {
       if (this.activeRequests >= this.maxConcurrentRequests) {
         // Queue the request for later execution
@@ -399,7 +399,7 @@ if (isMainThread) {
       );
 
       try {
-        // Step 1-3 with parallel execution
+        // Step 1 to 3 with parallel execution
         await Promise.all(
           this.robotsUrls.map((robotsUrl) => this.parseRobots(robotsUrl))
         );
@@ -418,6 +418,7 @@ if (isMainThread) {
           serializableResults[domain] = [...urlSet];
         }
 
+        //postMessage for communication with main thread
         parentPort.postMessage({
           type: "result",
           data: serializableResults,
